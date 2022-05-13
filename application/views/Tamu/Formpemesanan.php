@@ -47,7 +47,7 @@
   </div>
   <div class="col-md-12">
     <label for="inputPassword4" class="form-label">Email</label>
-    <input type="email" class="form-control" id="inputPassword4" name="email" required>
+    <input type="email" class="form-control"  placeholder="Masukkan Email Anda" id="inputPassword4" name="email" required>
   </div>
   <div class="col-md-12">
     <label for="inputPassword4" class="form-label">Nama Tamu</label>

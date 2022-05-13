@@ -64,8 +64,8 @@ class Auth extends CI_Controller {
     if($_SESSION['login']->level=="resepsionis"){
 	    redirect('/Resepsionis/dafpes');
     }
-    if($_SESSION['login']->level=="Admin"){
-	    redirect('/Tamu/fasilitas_Hotel');
+    if($_SESSION['login']->level=="admin"){
+	    redirect('/Admin/kamar');
     }
   }
 
