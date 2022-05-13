@@ -2,38 +2,35 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Resepsionis extends CI_Controller {
-
-    public function __construct()
-    {
-            parent::__construct();
-            $this->load->model('Mres');
-    }
-    public function dafpes()
-    {
-        $data['datapes'] = $this->Mres->datapesanan();
-        // var_dump($data['datapes']);die;
-        $this->load->view('Resepsionis/Daftarpesanan', $data);
-    }
-
-    public function gantistatus()
-    {
-        $data['id'] = $_GET['id'];
-        // var_dump($id);die;
-        $this->load->view('Resepsionis/gantistatus', $data);
-    }
-
-    public function ubahdatapesanan()
-    {
-        $status = $_POST['Status'];
-        $id =  $_GET['id'];
-       $this->Mres->ubahdata($status, $id);
-       redirect('Resepsionis/dafpes');
-    }
-
-    public function cetak()
+	public function Home()
 	{
-        $data['datapes'] = $this->Mres->datapesanan();
-		$this->load->view('Resepsionis/cetak', $data);
+        $this->load->model('MResepsionis');
+        $data['pesanan'] = $this->MResepsionis->getAllPesanan(); 
+		$this->load->view('Resepsionis/Home', $data);
 	}
 
+	public function ubahDataPesanan()
+	{
+		$this->load->model('MResepsionis');
+		$id = $_GET['id'];
+		$data['data'] = $this->MResepsionis->ubahData($id); 
+		$this->load->view('Resepsionis/ubahDataPesanan', $data);
+	}
+
+	public function storeDataPesanan()
+	{
+		$dataPesanan = $_POST;
+		// var_dump($dataPesanan['Status']);die;
+		$this->load->model('MResepsionis');
+		$id = $_GET['id'];
+		$data['data'] = $this->MResepsionis->storeDataPesanan($id, $dataPesanan); 
+		redirect('Resepsionis/Home');
+	}
+	
+	public function cetak()
+	{
+		$this->load->model('MResepsionis');
+        $data['pesanan'] = $this->MResepsionis->getAllPesanan(); 
+		$this->load->view('Resepsionis/cetak', $data);
+	}
 }

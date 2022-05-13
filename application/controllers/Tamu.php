@@ -2,103 +2,130 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Tamu extends CI_Controller {
-	public function __construct()
-	{
-		parent:: __construct();
-		$this->load->model('Mtamu');
-	}
-	public function index()
-	{
-		$this->load->view('welcome_message');
-	}
+    public function detailTipe()
+    {
+        
+            $this->load->model('MTamu');
+            $query['DataKamById'] = $this->MTamu->getkamarbyid();
+            $query['DataFasById'] = $this->MTamu->getfasbyid();
+            $this->load->view('Tamu/detailFKamar', [
+                'data' => $query
+            ]);
+        
+    }
 
-	public function TipeKamar()
-	{
-		$tipe_kamar = $this->db->get('tipe_room')->result();
-		$data=[];
-		foreach ($tipe_kamar as $key => $kamar) {
-			$this->db->where('id_fkamar', $kamar->id_kamar);
-			$fasilitaskamar = $this->db->get('f_kamar')->result();
-			$data[$key]=array(
-				'info_kamar'=>$kamar,
-				'f_kamar'=>$fasilitaskamar
-			);
-		}
+    public function pesanKamar()
+    {
+        if (empty($_SESSION['user'])) {
+            $this->load->view('Auth/login');
+        }else {
+            $this->load->model('MTamu');
+            $query['Kamar'] = $this->MTamu->getAll();
+            // $query['DataKamById'] = $this->MTamu->getkamarbyid();
+            $query['user'] = $_SESSION['user']; 
+            
+            $this->load->view('Tamu/book', [
+                'data' => $query
+            ]);
+        }
+    }
 
-		$this->load->view('Tamu/Fasilitaskamar',['data'=>$data]);
-		
-	}
+    public function booknow()
+    {
+        
 
-	public function Beranda()
-	{
-		$this->load->view('Tamu/Beranda');
-	}
+        
+            $this->load->model('MTamu');
+            $query['Kamar'] = $this->MTamu->getAll();
+            $query['DataKamById'] = $this->MTamu->getkamarbyid();
+            $query['user'] = $_SESSION['user']; 
+            $query['datakiriman'] = $_POST;
 
-	public function fkamar()
-	{
-		// $this->db->select('*');
-		// $this->db->from('f_hotel');
-		// $this->db->join('f_kamar', 'f_kamar.id_fkamar = f_hotel.id');
-		$data['fashotel'] = $this->db->get('f_hotel')->result();
-		$data['faskamar'] = $this->db->get('f_kamar')->result();
-		// var_dump($data);die;
-		$this->load->view('Tamu/Fasilitaskamar', $data);
-	}
-	
-	public function Kamar()
-	{
-		$tipe_kamar = $this->db->get('tipe_room')->result();
-		$data=[];
-		foreach ($tipe_kamar as $key => $kamar) {
-			$this->db->where('id_kamar', $kamar->id_kamar);
-			$fasilitaskamar = $this->db->get('f_kamar')->result();
-			$data[$key]=array(
-				'info_kamar'=>$kamar,
-				'f_kamar'=>$fasilitaskamar
-			);
-		}
+            // var_dump($query['datakiriman']);
+            $this->load->view('Tamu/book', [
+                'data' => $query
+            ]);
+        
+            
+        
+    }
 
-		$this->load->view('Tamu/Kamar',['data'=>$data]);
-	}
+    public function ref()
+    {
+        
+            $this->load->model('MTamu');
+            $query['book'] = $this->MTamu->dataRef();
+            
+            $this->load->view('Tamu/ref', [
+                'data' => $query
+            ]);
+        
+    }
 
-	public function formpemesanan()
-	{
-		$data['user'] = $_SESSION['login'];
-		$data['a'] = $this->Mtamu->random_string(10);
-		$this->load->view('Tamu/formpemesanan', $data);
-	}
+    public function prosBook()
+    {
+      
+            $this->load->model('MTamu');
+            $query['storeData'] = $this->MTamu->storeProsbook();
+            
+            redirect('/Tamu/ref');
+        
+    }
 
-	public function tambahdatapemesan()
-	{
-		$this->db->select('*');
-		$this->db->from('tipe_room');
-		$this->db->where('id_kamar', $_POST['id_kamar']);
-		$datapesanan = $this->db->get('')->result();
-		$this->Mtamu->pesankamar($datapesanan);
-	}
+    public function formpemesanan()
+    {
+        
+            $this->load->model('MTamu');
+            $query = $this->MTamu->getAll();
 
-	public function daftarpesanan()
-	{
-		$user = $_SESSION['login']->Nama;
-		$data['pesanan'] = $this->Mtamu->DataPesanan($user);
-		// var_dump($data['pesanan']);die; 
-		$this->load->view('Tamu/DaftarPesanan', $data);
-	}
+            foreach ($query as $key => $kamar) {
+                $data[$key] = array(
+                    'Info_kamar' => $kamar,
+                   
+                );
+            }
+            $this->load->view('Tamu/Kamar', [
+                'data' => $data
+            ]);
 
-	public function BatalkanPesanan()
-	{
-		$id = $_GET['id'];
-		$this->Mtamu->batalkanPesanan($id);
-		redirect('Tamu/DaftarPesanan');
-	}
+    }
 
-	public function cetakpdf()
-	{
-		$id = $_GET['id'];
-		// var_dump($id);die;
-		$user = $_SESSION['login']->Nama;
-		$data['pesanan'] = $this->Mtamu->cetakdatabyid($id);
-		// var_dump($data['pesanan']);die; 
-		$this->load->view('Tamu/cetak', $data);
-	}
+    public function Home()
+    {
+        $this->load->view('Tamu/Home');
+    }
+
+    public function Fasilitas()
+    {
+       
+            $this->load->model('MTamu');
+            // $this->load->library('pagination');
+
+            // $config['base_url'] = 'http://localhost/hotel_oka/Tamu/Fasilitas/';
+            // $config['total_rows'] = $this->MTamu->hitungSemuaData();
+            // $config['per_page'] = 6;
+
+            // $this->pagination->initialize($config);
+
+            // $query['start'] = $this->uri->segment(3);
+            $query['F_kamar'] = $this->MTamu->dataFkamar();
+            $query['F_Hotel'] = $this->MTamu->dataFhotel();
+            
+            $this->load->view('Tamu/Fasilitas', [
+                'data' => $query
+            ]);
+        
+    }
+
+    public function cetak()
+    {
+        $this->load->view('Tamu/cetak');
+    }
+
+    public function Logout()
+    {   
+        $this->session->sess_destroy();
+        redirect('Tamu/Home', 'refresh');
+    }
+
 }
