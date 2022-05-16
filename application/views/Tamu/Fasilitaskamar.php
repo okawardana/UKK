@@ -15,7 +15,7 @@
             width: 35px;
         }
     </style>
-    <title>Hello, world!</title>
+    <title>Hotel Hebat | Fasilitas Kamar</title>
   </head>
   <body>
   

@@ -16,7 +16,7 @@
             width: 35px;
         }
     </style>
-    <title>Hotel Hebat</title>
+    <title>Hotel Hebat | Daftar Pesanan</title>
   </head>
   <body>
   
@@ -64,8 +64,9 @@
                 <td><?= $value->Status ?></td>
                     <td>
                         <div class="d-gird">
-                        <a href="<?= base_url('Tamu/cetakpdf').'?id='.$value->id_pemesanan ?>" target="_blank" type="button" class="btn btn-primary d-grid">cetak PDF </a>
-                        </div><!-- <button class="btn btn-danger">Batalkan </button> -->
+                            <a href="<?= base_url('Tamu/cetakpdf').'?id='.$value->id_pemesanan ?>" target="_blank" type="button" class="btn btn-primary d-grid">cetak PDF </a>
+                        </div>
+                        <!-- <button class="btn btn-danger">Batalkan </button> -->
                     </td>
                 <?php endif ;?>
                 </tr>

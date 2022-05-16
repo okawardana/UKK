@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.1.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 13 Bulan Mei 2022 pada 14.43
--- Versi server: 10.4.20-MariaDB
--- Versi PHP: 7.3.29
+-- Generation Time: May 16, 2022 at 04:13 PM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -23,29 +23,29 @@ SET time_zone = "+00:00";
 
 DELIMITER $$
 --
--- Prosedur
+-- Procedures
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `simpan_f_hotel` (`id` INT(11), `nama_fasilitas` TEXT, `img` TEXT, `deks` TEXT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `simpan_f_hotel` (`id` INT(11), `nama_fasilitas` TEXT, `img` TEXT, `deks` TEXT)   BEGIN
 	INSERT INTO f_hotel
 	VALUES(id,nama_fasilitas,img,deks);
     END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `simpan_f_kamar` (`id_fkamar` INT(11), `id_kamar` INT(11), `nama_fasilitas` TEXT, `kategory` VARCHAR(255), `img` TEXT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `simpan_f_kamar` (`id_fkamar` INT(11), `id_kamar` INT(11), `nama_fasilitas` TEXT, `kategory` VARCHAR(255), `img` TEXT)   BEGIN
 	INSERT INTO f_kamar
 	VALUES(id_fkamar,id_kamar,nama_fasilitas,kategory,img);
     END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `simpan_pemesanan` (`id` INT(11), `nama_pemesan` VARCHAR(50), `email` VARCHAR(35), `no_hp` VARCHAR(35), `nama_tamu` VARCHAR(50), `id_kamar` INT(11), `tgl_cekin` DATE, `tgl_cekout` DATE, `jml_kamar` INT(11), `Harga` INT(11), `PayBay` VARCHAR(244), `PayEND` INT(1), `Nomor_Kamar` VARCHAR(255), `RefPB` VARCHAR(255))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `simpan_pemesanan` (`id` INT(11), `nama_pemesan` VARCHAR(50), `email` VARCHAR(35), `no_hp` VARCHAR(35), `nama_tamu` VARCHAR(50), `id_kamar` INT(11), `tgl_cekin` DATE, `tgl_cekout` DATE, `jml_kamar` INT(11), `Harga` INT(11), `PayBay` VARCHAR(244), `PayEND` INT(1), `Nomor_Kamar` VARCHAR(255), `RefPB` VARCHAR(255))   BEGIN
     insert into pemesanan
     values(id,nama_pemesan,email,no_hp,nama_tamu,id_kamar,tgl_cekin,tgl_cekout,jml_kamar,Harga,PayBay,PayEND,Nomor_Kamar,RefPB);
     END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `simpan_tipe_kamar` (`id_kamar` INT(11), `Nama_room` VARCHAR(244), `harga` INT(11), `Stok` INT(11), `onuse` INT(11), `onbook` INT(11), `img_room` TEXT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `simpan_tipe_kamar` (`id_kamar` INT(11), `Nama_room` VARCHAR(244), `harga` INT(11), `Stok` INT(11), `onuse` INT(11), `onbook` INT(11), `img_room` TEXT)   BEGIN
 	INSERT INTO tipe_room
 	VALUES(id_kamar,Nama_room,harga,Stok,onuse,onbook,img_room);
     END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `simpan_users` (`id_login` INT(11), `username` VARCHAR(35), `pass` VARCHAR(35), `Nama` VARCHAR(255), `Jenis_kelamin` VARCHAR(255), `tgllahir` DATE, `no_telp` VARCHAR(14), `lev` ENUM('admin','resepsionis','tamu'))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `simpan_users` (`id_login` INT(11), `username` VARCHAR(35), `pass` VARCHAR(35), `Nama` VARCHAR(255), `Jenis_kelamin` VARCHAR(255), `tgllahir` DATE, `no_telp` VARCHAR(14), `lev` ENUM('admin','resepsionis','tamu'))   BEGIN
 	insert into users
 	values(id_login,username,pass,Nama,Jenis_kelamin,tgllahir,no_telp,lev);
     END$$
@@ -55,7 +55,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `f_hotel`
+-- Table structure for table `f_hotel`
 --
 
 CREATE TABLE `f_hotel` (
@@ -66,18 +66,18 @@ CREATE TABLE `f_hotel` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `f_hotel`
+-- Dumping data for table `f_hotel`
 --
 
 INSERT INTO `f_hotel` (`id`, `nama_fasilitas`, `img`, `deks`) VALUES
 (2, 'Asidaraji', 'https://atpetsi.or.id/uploads/article/view/210507061237200228114324hotel.jpg', 'Nandeyo deyo'),
 (3, 'f2', 'http://localhost/phpmyadmin/themes/pmahomme/img/logo_left.png', 'tes'),
-(4, 'spa', 'spa.jpg', 'membuat anda relax');
+(4, 'spa', 'https://73cc8915eb9cf66dad90-91c9e0dc61e2af367a83ca09fafb7723.ssl.cf1.rackcdn.com/u/hermitage-spa.jpg', 'membuat anda relax');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `f_kamar`
+-- Table structure for table `f_kamar`
 --
 
 CREATE TABLE `f_kamar` (
@@ -89,17 +89,19 @@ CREATE TABLE `f_kamar` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `f_kamar`
+-- Dumping data for table `f_kamar`
 --
 
 INSERT INTO `f_kamar` (`id_fkamar`, `id_kamar`, `nama_fasilitas`, `kategory`, `img`) VALUES
 (11, 2, 'TV 200inch', 'Area', '1562724689-picsay.png'),
-(12, 2, 'TV 60 inch', 'electronic', 'BackgroundHome.png');
+(12, 2, 'TV 60 inch', 'electronic', 'BackgroundHome.png'),
+(13, 2, 'Bantal', 'Aksesoris', ''),
+(17, 7, 'Bantal', 'Aksesoris', '');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pemesanan`
+-- Table structure for table `pemesanan`
 --
 
 CREATE TABLE `pemesanan` (
@@ -120,16 +122,18 @@ CREATE TABLE `pemesanan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `pemesanan`
+-- Dumping data for table `pemesanan`
 --
 
 INSERT INTO `pemesanan` (`id_pemesanan`, `nama_pemesan`, `email`, `no_hp`, `nama_tamu`, `id_kamar`, `tgl_cekin`, `tgl_cekout`, `jml_kamar`, `T_harga`, `PayBy`, `PayEND`, `Status`, `RefPB`) VALUES
-(19, 'oika', 'oka@gmail.com', '0843785349', 'Oka', 2, '2022-04-25', '2022-04-27', 1, 2000000, 'Bayar Di Tempat', 0, 'CekIn', 'TPlIW3pMVr');
+(33, 'Oka Wardana', 'oka@gmail.com', '088462747124', 'Oka', 2, '2022-05-16', '2022-05-17', 1, 2000000, 'Bayar Di Tempat', 0, 'CekIn', 'IlbuxdjODo'),
+(37, 'Oka Wardana', 'oka@gmail.com', '084126641645', 'Oka', 2, '2022-05-16', '2022-05-17', 1, 800000, 'Bayar Di Tempat', 0, '', 'r9jY0G5Jca'),
+(39, 'Oka Wardana', 'oka@gmail.com', '0987216471245', 'Oka', 7, '2022-05-16', '2022-05-17', 1, 200000, 'Bayar Di Tempat', 0, '', '85OxE3cBAf');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tipe_room`
+-- Table structure for table `tipe_room`
 --
 
 CREATE TABLE `tipe_room` (
@@ -143,17 +147,17 @@ CREATE TABLE `tipe_room` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `tipe_room`
+-- Dumping data for table `tipe_room`
 --
 
 INSERT INTO `tipe_room` (`id_kamar`, `Nama_room`, `harga`, `Stok`, `onuse`, `onbook`, `img_room`) VALUES
-(2, 'Deluxe', 2000000, 10, 0, 0, 'BackgroundHome.png'),
-(7, 'Double Bed', 200000, 10, 0, 0, 'https://www.google.com/search?q=kamar+hotel+deluxe&rlz=1C1FHFK_enID980ID980&sxsrf=ALiCzsbUTFq2b2JrvhzdKeQzm1iEM-H1OQ:1652264389188&source=lnms&tbm=isch&sa=X&ved=2ahUKEwigifi_nNf3AhUsR2wGHZTdBuQQ_AUoAXoECAEQAw&biw=1536&bih=714&dpr=1.25#imgrc=JITSLVIiK6qOIM');
+(2, 'Deluxe', 800000, 10, 0, 0, 'https://cloudstorage.amari.com/property/johor-bahru/hotel-photos/stay/grand-deluxe/grand-deluxe-king.jpg'),
+(7, 'Double Bed', 200000, 10, 0, 0, 'https://asset-a.grid.id/crop/0x0:0x0/x/photo/2020/04/23/1232344100.jpg');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -168,7 +172,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id_login`, `username`, `password`, `Nama`, `Jenis_Kelamin`, `tgllahir`, `no_telp`, `level`) VALUES
@@ -176,92 +180,92 @@ INSERT INTO `users` (`id_login`, `username`, `password`, `Nama`, `Jenis_Kelamin`
 (17, 'ZX', '1234', 'Oka Wardana', 'Laki-Laki', '2022-03-15', '083807602009', 'tamu'),
 (18, 'oka', '123', 'Oka Wardana', 'Laki-Laki', '2022-04-11', '083807602009', 'tamu'),
 (19, 'Zero', '1234', 'zero', 'Laki-Laki', '2022-04-12', '081212121', 'tamu'),
-(20, 'username', 'pass', 'Nama', 'Jenis_kelamin', '0000-00-00', 'no_telp', ''),
 (21, 'zx25', '12345', 'Oka', 'laki-laki', '2003-10-09', '0889878685', 'tamu'),
-(23, 'Resepsionis', '12345', 'Resepsionis', 'Laki-Laki', '2022-05-09', '083807602009', 'resepsionis');
+(23, 'Resepsionis', '12345', 'Resepsionis', 'Laki-Laki', '2022-05-09', '083807602009', 'resepsionis'),
+(24, 'ninja', 'bubha', 'Hatori', 'Laki-Laki', '2022-05-10', '08345756378', 'tamu');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `f_hotel`
+-- Indexes for table `f_hotel`
 --
 ALTER TABLE `f_hotel`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `f_kamar`
+-- Indexes for table `f_kamar`
 --
 ALTER TABLE `f_kamar`
   ADD PRIMARY KEY (`id_fkamar`),
   ADD KEY `id_kamar` (`id_kamar`);
 
 --
--- Indeks untuk tabel `pemesanan`
+-- Indexes for table `pemesanan`
 --
 ALTER TABLE `pemesanan`
   ADD PRIMARY KEY (`id_pemesanan`),
   ADD KEY `id_kamar` (`id_kamar`);
 
 --
--- Indeks untuk tabel `tipe_room`
+-- Indexes for table `tipe_room`
 --
 ALTER TABLE `tipe_room`
   ADD PRIMARY KEY (`id_kamar`);
 
 --
--- Indeks untuk tabel `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id_login`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `f_hotel`
+-- AUTO_INCREMENT for table `f_hotel`
 --
 ALTER TABLE `f_hotel`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT untuk tabel `f_kamar`
+-- AUTO_INCREMENT for table `f_kamar`
 --
 ALTER TABLE `f_kamar`
-  MODIFY `id_fkamar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_fkamar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- AUTO_INCREMENT untuk tabel `pemesanan`
+-- AUTO_INCREMENT for table `pemesanan`
 --
 ALTER TABLE `pemesanan`
-  MODIFY `id_pemesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id_pemesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
--- AUTO_INCREMENT untuk tabel `tipe_room`
+-- AUTO_INCREMENT for table `tipe_room`
 --
 ALTER TABLE `tipe_room`
-  MODIFY `id_kamar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_kamar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT untuk tabel `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_login` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id_login` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `f_kamar`
+-- Constraints for table `f_kamar`
 --
 ALTER TABLE `f_kamar`
   ADD CONSTRAINT `f_kamar_ibfk_1` FOREIGN KEY (`id_kamar`) REFERENCES `tipe_room` (`id_kamar`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `pemesanan`
+-- Constraints for table `pemesanan`
 --
 ALTER TABLE `pemesanan`
   ADD CONSTRAINT `pemesanan_ibfk_1` FOREIGN KEY (`id_kamar`) REFERENCES `tipe_room` (`id_kamar`) ON DELETE CASCADE ON UPDATE CASCADE;

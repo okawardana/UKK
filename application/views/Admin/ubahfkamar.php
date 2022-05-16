@@ -29,7 +29,7 @@
             <label for="inputState" class="form-label">Nama Kamar</label>
             <select id="inputState" class="form-select" name="id_kamar" >
             <option value="<?= $ufk[0]->id_kamar?>" selected><?= $ufk[0]->Nama_room?></option>
-            <?php foreach($dataKamar as $kamar) :?>
+            <?php foreach($dataSelectkamar as $kamar) :?>
             <option value="<?= $kamar->id_kamar?>"><?= $kamar->Nama_room?></option>
             <?php endforeach ;?>
             </select>

@@ -1,85 +1,91 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <style>
+        #Test{
+            margin:0 20px 0 20px ;
+            text-align:center;
+        }
 
-<head>
-  <?php $this->load->view('Tamu/_partials/head'); ?>
-</head>
-
-<body>
-
-  <!-- ======= Navbar ======= -->
-  <?php $this->load->view('Tamu/_partials/navbar'); ?>
-
-  <!-- ======= Hero Section ======= -->
-  <?php $this->load->view('Tamu/_partials/hero'); ?>
-  <!-- End Hero -->
+        .gambarProfile{
+            border-radius: 50%;
+            height: 35px;
+            width: 35px;
+        }
+    </style>
+    <title>Hotel Hebat | Form Pemesanan</title>
+  </head>
+  <body>
   
-  <main id="main">
-        
-    <!-- ======= Item Section ======= -->
-    <section id="about" class="about">
-      <div class="container">
-      
-        <div class="section-title">
-          <span>Tipe Kamar</span>
-          <h2>Tipe Kamar</h2>
-          <hr>
-        </div>
-        
-        <?php foreach ($data as $key => $kamar) :?>
-        <div class="card mb-3 mt-2">
-            <img src="<?= $kamar['Info_kamar']->img_room?>" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h2 class="card-title">Tipe <?= $kamar['Info_kamar']->Nama_room?> <button disabled="disabled" class="btn btn-outline-success btn-sm">Rp. <?= $kamar['Info_kamar']->harga?></button></h2>
-                <p class="card-text mt-1">
-                    Fasilitas1 :
-                </p>
-                <p>
-                    <ul>
-                        <?php if(!empty($kamar['F_kamar'])) :?>
-                            <?php foreach ($kamar['F_kamar'] as $key2 => $F) :?>
-                                <li>
-                                    <?= $F->nama_fasilitas ?>
-                                </li>
-                            <?php endforeach ;?>
-                        <?php endif ;?>
-                    </ul>
-                    <ul>
-                    </ul>
-                </p>
-                <p class="card-text">
-                    <a href="<?= base_url('/Tamu/detailTipe').'?id='.$kamar['Info_kamar']->id;?>" class="btn btn-primary" target="_blank">Lihat Detail</a>
-                </p>
+  <?php $this->load->view('Tamu/_partials/navbar.php'); ?>
+  <?php $this->load->view('Tamu/_partials/jumbotron.php'); ?>
+<div class="container">
+        <div class="row">
+    <div class="cekin">
+        <form action="<?= base_url('Tamu/tambahdatapemesan') ?>" method="post" class="row g-3">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <input type="date" class="form-control" placeholder="Cek In" name="tgl_cekin" aria-label="Cek In" required>
+            </div>
+            <div class="col-md-4">
+                <input type="date" class="form-control" placeholder="Cek Out" name="tgl_cekout" aria-label="Cek Out" required>
+            </div>
+            <div class="col-md-4">
+                <input type="number" class="form-control" placeholder="Jumlah Kamar" name="jml_kamar" value="1" aria-label="Jumlah Kamar" required>
             </div>
         </div>
-        <?php endforeach ;?>
+    </div>
 
-      </div>
-           
-    </section>
+    <h2 class="text-left mt-3 mb-3">Form Pemesanan</h2>
+<input type="hidden" class="form-control" id="inputEmail4" name="id_pemesanan" required>
+  <div class="col-md-12">
+    <label for="inputEmail4" class="form-label">Nama Pemesan</label>
+    <input type="text" class="form-control" id="inputEmail4" name="nama_pemesan" value="<?= $user->Nama?>" readonly required>
+  </div>
+  <div class="col-md-12">
+    <label for="inputPassword4" class="form-label">Email</label>
+    <input type="email" class="form-control"  placeholder="Masukkan Email Anda" id="inputPassword4" name="email" required>
+  </div>
+  <div class="col-md-12">
+    <label for="inputPassword4" class="form-label">Nama Tamu</label>
+    <input type="text" class="form-control" id="inputPassword4" name="nama_tamu" required>
+  </div>
+  <div class="col-md-4">
+    <label for="inputAddress" class="form-label">Nomor HandPhone</label>
+    <input type="number" class="form-control" id="inputAddress" placeholder="" name="no_hp" required>
+  </div>
 
-          </div>
-          <div class="swiper-pagination"></div>
-        </div>
+  <div class="col-md-4">
+    <label for="inputState" class="form-label">Pilih Kamar</label>
+    <select id="inputState" class="form-select" name="id_kamar" required>
+      <option selected>Pilih...</option>
+    <?php foreach ($dataSelectkamar as $value) :?>
+      <option value="<?= $value->id_kamar ?>"><?= $value->Nama_room ?></option>
+    <?php endforeach ;?>
+    </select>
+  </div>
 
-      </div>
-    </section>
-    
-    
+  <div class="col-md-4">
+    <label for="inputState" class="form-label">PayBy</label>
+    <select id="inputState" class="form-select" name="PayBy" required>
+    <option selected>Pilih...</option>
+      <option value="Bayar Di Tempat">Bayar Di Tempat</option>
+      <option value="M-Banking">M-Banking</option>
 
-  </main>
-  
-  <!-- End #main -->
+    </select>
+  </div>
 
-  <!-- ======= Footer ======= -->
-  <?php $this->load->view('Tamu/_partials/footer'); ?>
-  <!-- End Footer -->
+  <input type="hidden" name="RefPB" value="<?= $a?>">
+  <div class="col-12 mt-3 mb-3">
+    <button type="submit" class="btn btn-primary">Konfirmasi Pemesanan</button>
+  </div>
+</form>
+</div>
+</div>
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Vendor JS Files -->
-  <?php $this->load->view('Tamu/_partials/js'); ?>
-
-</body>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>   
+  </body>
 </html>
